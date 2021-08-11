@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:showIn="navigation_view">
+      tools:showIn="drawer_nav_view">
 
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/navigation_map"
-                android:icon="@drawable/ic_menu_camera"
+                android:icon="@mipmap/ic_drawer_nav_map"
                 android:title="@string/menu_map"/>
         <item
                 android:id="@+id/navigation_focus"
-                android:icon="@drawable/ic_menu_gallery"
+                android:icon="@mipmap/ic_drawer_nav_focuse"
                 android:title="@string/menu_focus"/>
         <item
                 android:id="@+id/navigation_sadhana"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@mipmap/ic_drawer_nav_sadhana"
                 android:title="@string/menu_sadhana"/>
     </group>
+
+    <item tools:ignore="MenuTitle">
+        <menu>
+            <item
+                    android:id="@+id/navigation_sign_in"
+                    android:icon="@mipmap/ic_drawer_nav_sign_in"
+                    android:title="@string/sign_in"/>
+        </menu>
+    </item>
+
+
 </menu>

@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.navigation_veda,
                 R.id.navigation_focus,
                 R.id.navigation_sadhana,
-                R.id.navigation_statistics
+                R.id.navigation_statistics,
+                R.id.navigation_sign_in
             ), binding.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
