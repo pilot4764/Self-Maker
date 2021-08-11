@@ -1,7 +1,9 @@
 package com.artsam.selfmaker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -16,13 +18,24 @@ import com.google.android.material.snackbar.Snackbar
 import com.artsam.selfmaker.data.source.remote.AuthViewModel
 import com.artsam.selfmaker.databinding.ActivityMainBinding
 import com.artsam.selfmaker.utils.log
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener,
+    NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val authViewModel by viewModels<AuthViewModel>()
     private lateinit var drawerNavViewHeader: View
+
+    companion object {
+        const val TAG = "LoginFragment"
+        const val SIGN_IN_RESULT_CODE = 1001
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +71,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         drawerNavViewHeader = binding.drawerNavView.getHeaderView(0)
         drawerNavViewHeader.setOnClickListener(this)
+        binding.drawerNavView.setNavigationItemSelectedListener(this)
 
         binding.appBarMain.fab.setOnClickListener(this)
     }
@@ -82,6 +96,54 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.ll_nav_header_root -> Snackbar.make(v, "Wow", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
+        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        log { "onClick(): " + item.itemId }
+        when (item.itemId) {
+            R.id.navigation_sign_in -> {
+                launchSignInFlow()
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun launchSignInFlow() {
+        // Choose authentication providers
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
+        )
+
+        // Create and launch sign-in intent
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .build()
+        signInLauncher.launch(signInIntent)
+    }
+
+    // See: https://developer.android.com/training/basics/intents/result
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        this.onSignInResult(res)
+    }
+
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            Log.i(
+                TAG,
+                "Successfully signed in user " +
+                        "${FirebaseAuth.getInstance().currentUser?.displayName}!"
+            )
+        } else {
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
         }
     }
 
