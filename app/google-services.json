@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "983537630700",
+    "project_id": "selfmakerid",
+    "storage_bucket": "selfmakerid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983537630700:android:79c87edd64d3ccfbf1d4c9",
+        "android_client_info": {
+          "package_name": "com.artsam.selfmaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983537630700-0qui03n2ch99q19orcb11cc6ak8tigct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.artsam.selfmaker",
+            "certificate_hash": "6a3fbdd6ecd1b15b7d7370197ebd461cdfc158b3"
+          }
+        },
+        {
+          "client_id": "983537630700-vbmngpnt4gaav63tg5tuebvago590vti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdbisq4Tabvn6erApJSNTMpeL4arDmBwc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983537630700-vbmngpnt4gaav63tg5tuebvago590vti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
